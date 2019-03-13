@@ -4,14 +4,16 @@ import React, { Component } from 'react';
 //need to consider whether it should be function (no state etc.) otherwise 'class extend'
 require('../styles/home.scss')
 
-//not 100% sure this is correct location yet
 import ChatBar from './ChatBar.jsx'
+import NavBar from './NavBar.jsx'
+import MessageList from './MessageList.jsx'
 
 class App extends Component {
   render() {
     return (
       <div>
-        <main className="messages">
+        < NavBar />
+        < MessageList />
           <div className="message">
             <span className="message-username">Anonymous1</span>
             <span className="message-content">I won't be impressed with technology until I can download food.</span>
@@ -19,7 +21,6 @@ class App extends Component {
           <div className="message system">
             Anonymous1 changed their name to nomnom.
           </div>
-        </main>
         < ChatBar />
       </div>
     );
