@@ -12,10 +12,47 @@ class App extends Component {
   
   constructor(props) {
     super(props);
-    this.state = {loading: true};
+    this.state = {
+      loading: true,
+      currentUser: "Tyler",
+      messages: [
+        {
+          type: "incomingMessage",
+          content: "I won't be impressed with technology until I can download food.",
+          username: "Anonymous1"
+        },
+        {
+          type: "incomingNotification",
+          content: "Anonymous1 changed their name to nomnom",
+        },
+        {
+          type: "incomingMessage",
+          content: "I wouldn't want to download Kraft Dinner. I'd be scared of cheese packet loss.",
+          username: "Anonymous2"
+        },
+        {
+          type: "incomingMessage",
+          content: "...",
+          username: "nomnom"
+        },
+        {
+          type: "incomingMessage",
+          content: "I'd love to download a fried egg, but I'm afraid encryption would scramble it",
+          username: "Anonymous2"
+        },
+        {
+          type: "incomingMessage",
+          content: "This isn't funny. You're not funny",
+          username: "nomnom"
+        },
+        {
+          type: "incomingNotification",
+          content: "Anonymous2 changed their name to NotFunny",
+        },
+      ]
+    }
   }
-  // Called after the component was rendered and it was attached to the
-  // DOM. This is a good place to make AJAX requests or setTimeout.
+
   componentDidMount() {
     // After 3 seconds, set `loading` to false in the state.
     setTimeout(() => {
@@ -30,14 +67,7 @@ class App extends Component {
       return (
         <div>
           < NavBar />
-          < MessageList />
-            <div className="message">
-              <span className="message-username">Anonymous1</span>
-              <span className="message-content">I won't be impressed with technology until I can download food.</span>
-            </div>
-            <div className="message system">
-              Anonymous1 changed their name to nomnom.
-            </div>
+          < MessageList />  
           < ChatBar />
         </div>
       );
