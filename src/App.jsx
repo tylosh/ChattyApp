@@ -13,7 +13,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
       currentUser: "Tyler",
       messages: [
         {
@@ -61,26 +60,43 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // After 3 seconds, set `loading` to false in the state.
+    console.log("componentDidMount <App />");
     setTimeout(() => {
-      this.setState({loading: false}); // this triggers a re-render!
-    }, 3000)
+      console.log("Simulating incoming message");
+      //maybe get rid of these comments down the road.
+      // Add a new message to the list of messages in the data store
+      const newMessage = {id: 8, type: "incomingMessage", username: "Michelle", content: "Hello there!"};
+      const messages = this.state.messages.concat(newMessage)
+      // Update the state of the app component.
+      // Calling setState will trigger a call to render() in App and all child components.
+      this.setState({messages: messages})
+    }, 3000);
   }
   
+  newChatMessage = function(msg) {
+    //this.setState({
+      //messages: this.state.messages.concat({
+        //simple solution
+        //id: messages.length + 1,
+        //type: "incomingMessage",
+        //content: msg.content,
+        //username: "Bob"
+      //})
+    //})
+    console.log("We are in here")
+    console.log(msg)
+  }
+  
+
+
   render() {
-    if (this.state.loading) {
-      return <h1>Loading...</h1>
-    } else {
-      return (
-        <div>
-          < NavBar />
-          < MessageList messageList = {this.state.messages}  />  
-          < ChatBar currentUser={this.state.currentUser}/>
-        </div>
-      );
-    }
-    
-    
+    return (
+      <div>
+        < NavBar />
+        < MessageList messageList = {this.state.messages} />  
+        < ChatBar currentUser={this.state.currentUser} newChatMessage={this.newChatMessage} />
+      </div>
+    );
   }
 }
 export default App;
