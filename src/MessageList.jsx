@@ -5,23 +5,25 @@ import Message from './Message.jsx'
 class MessageList extends Component {
     constructor(props) {
         super(props);
-        const messageArray = this.props.messageList;
-        let chatMessages = messageArray.filter(function(msg) {
-            return msg.type === "incomingMessage" 
-        })
-
-        this.state = {chatMessages};
-
         
-
-        console.log("***",chatMessages)
-
+       //don't need to store anything here so array work goes in render section
     }
 
     render() {
+
+        const messageArray = this.props.messageList;
+        let chatMessageList = messageArray.filter(function(msg) {
+            return msg.type === "incomingMessage" 
+        })
+
+        const chatMessages = chatMessageList.map(msg => (
+            <Message user={msg.username} content={msg.content} /> 
+        ))
+
         return (
+            
             <main className="messages">
-                < Message chatMessages={this.state.chatMessages} />
+                {chatMessages}
             </main>
         )
     }
