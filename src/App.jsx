@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: "Anonymous",
+      currentUser: "",
       messages: [
         {
           id:1,
@@ -85,6 +85,7 @@ class App extends Component {
       })  
     })
   }
+  
   
 
   render() {
