@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 
 class Message extends Component {
+    /*
+    constructor(props) {
+        super();
+        console.log(this.props)
+    }
+    */
+    
+    
     render() {
+        console.log(this.props.chatMessages)
+        
         return (
             <div>
                 <div className="message">
