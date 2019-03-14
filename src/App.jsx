@@ -8,10 +8,6 @@ import ChatBar from './ChatBar.jsx'
 import NavBar from './NavBar.jsx'
 import MessageList from './MessageList.jsx'
 
-const socket = new WebSocket("ws://localhost:3001");
-socket.addEventListener("open", function(evt){
-  socket.send("New Connection")
-});
 
 class App extends Component {
   
@@ -62,11 +58,18 @@ class App extends Component {
         },
       ]
     }
+    this.socket = new WebSocket('ws://localhost:3001/');
     this.newChatMessage = this.newChatMessage.bind(this);
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+    //const socket = new WebSocket("ws://localhost:3001");
+    this.socket.addEventListener("open", function(evt){
+      this.socket.send("New Connection")
+      console.log("Connected to Server")
+    });
+    
     setTimeout(() => {
       console.log("Simulating incoming message");
       //maybe get rid of these comments down the road? Think this will get deleted anyways?
@@ -79,7 +82,15 @@ class App extends Component {
     }, 3000);
   }
   
+
   newChatMessage = function(msg) {
+    const newChat = {
+      type: "sendMessage",
+      content: msg,
+      username: "tyler"
+    }
+
+    
     this.setState({
       //in real time will this sequential id work? maybe test if id exists before posting, and if it does, +1?
       messages: this.state.messages.concat({
@@ -87,12 +98,14 @@ class App extends Component {
         type: "incomingMessage",
         content: msg,
         username: "tyler"
-      })  
+      })
+      
     })
+
+    this.socket.send(JSON.stringify(newChat))
   }
   
   
-
   render() {
     return (
       <div>
