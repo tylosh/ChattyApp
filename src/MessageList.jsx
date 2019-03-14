@@ -17,7 +17,7 @@ class MessageList extends Component {
         })
 
         const chatMessages = chatMessageList.map(msg => (
-            <Message user={msg.username} content={msg.content} /> 
+            <Message key={msg.id} user={msg.username} content={msg.content} /> 
         ))
 
         return (

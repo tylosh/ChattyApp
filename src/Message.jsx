@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 class Message extends Component {
     
-    render() {
-        
-        console.log("^^^^",this.props.chatMessages)
+    //I think it will make sense to maybe unfilter, and have an if render here for either name change or msg?
 
+    render() {
         return (
             <div>
                 <div className="message">
