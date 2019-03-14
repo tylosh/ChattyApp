@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: "Tyler",
+      currentUser: "Anonymous",
       messages: [
         {
           id:1,
@@ -57,15 +57,16 @@ class App extends Component {
         },
       ]
     }
+    this.newChatMessage = this.newChatMessage.bind(this);
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
-      //maybe get rid of these comments down the road.
+      //maybe get rid of these comments down the road? Think this will get deleted anyways?
       // Add a new message to the list of messages in the data store
-      const newMessage = {id: 8, type: "incomingMessage", username: "Michelle", content: "Hello there!"};
+      const newMessage = {id: 8, type: "incomingMessage", content: "Hello there!", username: "Michelle"};
       const messages = this.state.messages.concat(newMessage)
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
@@ -74,20 +75,17 @@ class App extends Component {
   }
   
   newChatMessage = function(msg) {
-    //this.setState({
-      //messages: this.state.messages.concat({
-        //simple solution
-        //id: messages.length + 1,
-        //type: "incomingMessage",
-        //content: msg.content,
-        //username: "Bob"
-      //})
-    //})
-    console.log("We are in here")
-    console.log(msg)
+    this.setState({
+      //in real time will this sequential id work? maybe test if id exists before posting, and if it does, +1?
+      messages: this.state.messages.concat({
+        id: this.state.messages.length + 1,
+        type: "incomingMessage",
+        content: msg,
+        username: "tyler"
+      })  
+    })
   }
   
-
 
   render() {
     return (
