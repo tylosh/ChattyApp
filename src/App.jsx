@@ -8,6 +8,11 @@ import ChatBar from './ChatBar.jsx'
 import NavBar from './NavBar.jsx'
 import MessageList from './MessageList.jsx'
 
+const socket = new WebSocket("ws://localhost:3001");
+socket.addEventListener("open", function(evt){
+  socket.send("New Connection")
+});
+
 class App extends Component {
   
   constructor(props) {
