@@ -25,14 +25,24 @@ wss.on('connection', (ws) => {
 
     ws.on('message', function incoming(data) {
         //parse JSON, provide unique ID and change to incomingMessage for type
-        let chatMessage = JSON.parse(data)
-        chatMessage.id = uuid();
-        chatMessage.type = "incomingMessage"
-        
+        let incomingPost = JSON.parse(data);
+        let outgoingPost = incomingPost;
+        switch(incomingPost.type) {
+            case "postNotification":
+                outgoingPost.type = "incomingNotification"
+                    break;
+            case "postMessage":
+                outgoingPost.id = uuid();
+                outgoingPost.type = "incomingMessage"
+                    break;
+              // show an error in the console if the message type is unknown
+              throw new Error("Unknown event type " + incomingPost.type);
+          }
+            
         //sent back to all clients
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(chatMessage))
+                client.send(JSON.stringify(outgoingPost))
             }
         })
     });

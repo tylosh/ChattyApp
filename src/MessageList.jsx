@@ -12,12 +12,12 @@ class MessageList extends Component {
     render() {
 
         const messageArray = this.props.messageList;
-        let chatMessageList = messageArray.filter(function(msg) {
-            return msg.type === "incomingMessage" 
-        })
+        //let chatMessageList = messageArray.filter(function(msg) {
+        //    return msg.type === "incomingMessage" 
+        //})
 
-        const chatMessages = chatMessageList.map(msg => (
-            <Message key={msg.id} user={msg.username} content={msg.content} /> 
+        const chatMessages = messageArray.map(msg => (
+            <Message key={msg.id} user={msg.username} content={msg.content} type={msg.type} /> 
         ))
 
         return (

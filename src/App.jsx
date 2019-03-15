@@ -20,8 +20,8 @@ class App extends Component {
     this.socket = new WebSocket('ws://localhost:3001/');
     
     this.socket.onmessage = (event) => {
-      //console.log("-------:)----",event);
       let parsedMessage = JSON.parse(event.data);
+      console.log(".......",parsedMessage)
       this.setState({
         messages: this.state.messages.concat(parsedMessage)
       })
@@ -51,10 +51,9 @@ class App extends Component {
     }, 3000);
   }
   
-
   newChatMessage = function(msg) {
     const newChat = {
-      type: "sendMessage",
+      type: "postMessage",
       content: msg,
       username: this.state.currentUser
     }
@@ -63,6 +62,13 @@ class App extends Component {
 
   //need to set state and update username
   usernameChange = function(newName) {
+    const newUsername = {
+      type: "postNotification",
+      //backticks ES6 wouldn't work so using string +
+      content: this.state.currentUser + " changed their name to " + newName
+    }
+    this.socket.send(JSON.stringify(newUsername))
+    
     this.setState({
       currentUser: newName
     })
