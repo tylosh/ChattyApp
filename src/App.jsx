@@ -15,16 +15,25 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: "Anonymous",
-      messages: []
+      messages: [],
+      userCount: 0
     }
     this.socket = new WebSocket('ws://localhost:3001/');
     
     this.socket.onmessage = (event) => {
       let parsedMessage = JSON.parse(event.data);
-      console.log(".......",parsedMessage)
-      this.setState({
-        messages: this.state.messages.concat(parsedMessage)
+      console.log("^^^^",parsedMessage)
+      let newUserCount = this.state.userCount
+      if (parsedMessage.type === "incomingUserCountUpdate") {
+        newUserCount = parsedMessage.userCount;
+      }      
+
+      this.setState({      
+        messages: this.state.messages.concat(parsedMessage),
+        userCount: newUserCount
       })
+      console.log("Current Users:",this.state.userCount)
+      console.log(this.state.messages)
     }
     
     this.newChatMessage = this.newChatMessage.bind(this);
@@ -34,8 +43,9 @@ class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
     //const socket = new WebSocket("ws://localhost:3001");
-    this.socket.addEventListener("open", function(evt){
-      this.socket.send("New Connection")
+    
+    this.socket.addEventListener("open", (evt) => {
+      //this.socket.send("New Connection")
       console.log("Connected to Server")
     });
     
@@ -43,12 +53,13 @@ class App extends Component {
       console.log("Simulating incoming message");
       //maybe get rid of these comments down the road? Think this will get deleted anyways?
       // Add a new message to the list of messages in the data store
-      const newMessage = {id: 8, type: "incomingMessage", content: "Hello there!", username: "Michelle"};
+      const newMessage = {id: 1, type: "incomingMessage", content: "Welcome to Chatty!", username: "ChattyBot"};
+      //left in a fake bot
       const messages = this.state.messages.concat(newMessage)
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages})
-    }, 3000);
+    }, 2000);
   }
   
   newChatMessage = function(msg) {
@@ -77,7 +88,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        < NavBar />
+        < NavBar userCount={this.state.userCount} />
         < MessageList messageList = {this.state.messages} />  
         < ChatBar currentUser={this.state.currentUser} newChatMessage={this.newChatMessage} usernameChange={this.usernameChange} />
       </div>

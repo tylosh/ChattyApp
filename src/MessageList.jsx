@@ -3,25 +3,14 @@ import React, { Component } from 'react';
 import Message from './Message.jsx'
 
 class MessageList extends Component {
-    constructor(props) {
-        super(props);
-        
-       //don't need to store anything here so array work goes in render section
-    }
-
+    //should this be a function?
     render() {
-
         const messageArray = this.props.messageList;
-        //let chatMessageList = messageArray.filter(function(msg) {
-        //    return msg.type === "incomingMessage" 
-        //})
-
         const chatMessages = messageArray.map(msg => (
             <Message key={msg.id} user={msg.username} content={msg.content} type={msg.type} /> 
         ))
 
         return (
-            
             <main className="messages">
                 {chatMessages}
             </main>

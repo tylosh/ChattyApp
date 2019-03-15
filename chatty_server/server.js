@@ -20,11 +20,30 @@ const wss = new SocketServer({ server });
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
+
+updateClientUsers = function () {
+    let countUsers = wss.clients.size;
+    let userObj = {
+        type: "incomingUserCountUpdate",
+        userCount: countUsers,
+        key: uuid()
+    }
+    console.log(countUsers)
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(userObj));
+        }
+    })
+};
+
 wss.on('connection', (ws) => {
     console.log('Client connected');
 
+    updateClientUsers();
+
     ws.on('message', function incoming(data) {
         //parse JSON, provide unique ID and change to incomingMessage for type
+        console.log("#####",data)
         let incomingPost = JSON.parse(data);
         let outgoingPost = incomingPost;
         switch(incomingPost.type) {
@@ -35,6 +54,7 @@ wss.on('connection', (ws) => {
                 outgoingPost.id = uuid();
                 outgoingPost.type = "incomingMessage"
                     break;
+                
               // show an error in the console if the message type is unknown
               throw new Error("Unknown event type " + incomingPost.type);
           }
@@ -43,10 +63,16 @@ wss.on('connection', (ws) => {
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify(outgoingPost))
+                console.log(outgoingPost)
             }
         })
+        
     });
 
     // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-    ws.on('close', () => console.log('Client disconnected'));
+    ws.on('close', () => {
+        console.log('Client disconnected');
+        updateClientUsers();
+    })
+    
 });
