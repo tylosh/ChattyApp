@@ -18,6 +18,15 @@ class App extends Component {
       messages: []
     }
     this.socket = new WebSocket('ws://localhost:3001/');
+    this.socket.onmessage = (event) => {
+      //console.log("-------:)----",event);
+      let parsedMessage = JSON.parse(event.data);
+      this.setState({
+        messages: this.state.messages.concat(parsedMessage)
+      })
+      
+      // code to handle incoming message
+    }
     this.newChatMessage = this.newChatMessage.bind(this);
   }
 
@@ -48,19 +57,6 @@ class App extends Component {
       content: msg,
       username: "tyler"
     }
-
-    
-    this.setState({
-      //in real time will this sequential id work? maybe test if id exists before posting, and if it does, +1?
-      messages: this.state.messages.concat({
-        id: this.state.messages.length + 1,
-        type: "incomingMessage",
-        content: msg,
-        username: "tyler"
-      })
-      
-    })
-
     this.socket.send(JSON.stringify(newChat))
   }
   

@@ -28,8 +28,8 @@ class ChatBar extends Component {
                         newChatMessage(event.target.value)
                         }
                     }}
-                  className="chatbar-message" 
-                  placeholder="Type a message and hit ENTER" 
+                    className="chatbar-message" 
+                    placeholder="Type a message and hit ENTER" 
                 />
             </footer>
         )
