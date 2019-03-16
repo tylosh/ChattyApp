@@ -20,6 +20,7 @@ server also needs to be started on Port 3001 -> run npm start from within chatty
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* Websockets
 
 ### Final Product
 
