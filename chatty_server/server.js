@@ -21,21 +21,6 @@ const wss = new SocketServer({ server });
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 
-updateClientUsers = function () {
-    let countUsers = wss.clients.size;
-    let userObj = {
-        type: "incomingUserCountUpdate",
-        userCount: countUsers,
-        key: uuid()
-    }
-    console.log(countUsers)
-    wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(userObj));
-        }
-    })
-};
-
 wss.on('connection', (ws) => {
     console.log('Client connected');
 
@@ -43,27 +28,26 @@ wss.on('connection', (ws) => {
 
     ws.on('message', function incoming(data) {
         //parse JSON, provide unique ID and change to incomingMessage for type
-        console.log("#####",data)
         let incomingPost = JSON.parse(data);
         let outgoingPost = incomingPost;
         switch(incomingPost.type) {
             case "postNotification":
                 outgoingPost.type = "incomingNotification"
+                outgoingPost.id = uuid();
                     break;
             case "postMessage":
                 outgoingPost.id = uuid();
                 outgoingPost.type = "incomingMessage"
                     break;
                 
-              // show an error in the console if the message type is unknown
-              throw new Error("Unknown event type " + incomingPost.type);
-          }
+            // show an error in the console if the message type is unknown
+            throw new Error("Unknown event type " + incomingPost.type);
+        }
             
         //sent back to all clients
         wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify(outgoingPost))
-                console.log(outgoingPost)
             }
         })
         
@@ -76,3 +60,20 @@ wss.on('connection', (ws) => {
     })
     
 });
+
+
+//------------Functions------------------>
+
+updateClientUsers = function () {
+    let countUsers = wss.clients.size;
+    let userObj = {
+        type: "incomingUserCountUpdate",
+        userCount: countUsers,
+        id: uuid()
+    }
+    wss.clients.forEach(client => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify(userObj));
+        }
+    })
+};

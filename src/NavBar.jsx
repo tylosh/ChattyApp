@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-//should be a function I think?
+//Navigation bar and user count module
 
 class NavBar extends Component {
     
-
     render() {
         let totalUsers = this.props.userCount;
 

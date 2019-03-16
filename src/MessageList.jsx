@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
 import Message from './Message.jsx'
 
 class MessageList extends Component {
-    //should this be a function?
     render() {
         const messageArray = this.props.messageList;
         const chatMessages = messageArray.map(msg => (

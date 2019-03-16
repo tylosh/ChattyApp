@@ -10,15 +10,11 @@ class ChatBar extends Component {
         let newChatMessage = this.props.newChatMessage;
         let usernameChange = this.props.usernameChange;
 
-        //console.log("***",this.props)
-        //console.log(this.props.currentUser)
-
         return ( 
             <footer className="chatbar">
                 <input 
                     onKeyPress={event => {
                         if(event.key === 'Enter') {
-                        console.log(event.target.value)
                         usernameChange(event.target.value)
                         }
                     }}
@@ -28,7 +24,6 @@ class ChatBar extends Component {
                 <input 
                     onKeyPress={event => {
                         if(event.key === 'Enter') {
-                        console.log(event.target.value)
                         newChatMessage(event.target.value)
                         event.target.value = ""
                         }
