@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class ChatBar extends Component {
     render() {
-        let user = "";
+
         if (this.props.currentUser) {
             user = this.props.currentUser;
         } 
@@ -25,7 +25,7 @@ class ChatBar extends Component {
                     onKeyPress={event => {
                         if(event.key === 'Enter') {
                         newChatMessage(event.target.value)
-                        event.target.value = ""
+                        event.target.value = ''
                         }
                     }}
                     className="chatbar-message" 
