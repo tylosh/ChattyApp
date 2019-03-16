@@ -1,13 +1,14 @@
 {
   "name": "chatty_server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chatty App is a real time web application allowing multiples users to chat in real time.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "App by Tyler Tomczyk",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tylosh/ChattyApp"
+  },
   "dependencies": {
     "express": "4.16.4",
     "uuid": "^3.3.2",

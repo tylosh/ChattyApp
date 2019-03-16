@@ -10,7 +10,8 @@ Install the dependencies and start the server.
 ```
 npm install
 npm start
-open http://localhost:3000
+the app will be open at -> <http://localhost:3000> in your browser
+server also needs to be started on Port 3001 -> run npm start from within chatty_server folder.
 ```
 
 ### Dependencies
