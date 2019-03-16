@@ -22,5 +22,5 @@ open http://localhost:3000
 
 ### Final Product
 
-!["Chat interface displaying messages and username changes"](https://github.com/tylosh/ChattyApp/tree/master/build/ChattyApp_UserInterface.png)
+!["Chat interface displaying messages and username changes"](https://github.com/tylosh/ChattyApp/blob/master/build/ChattyApp_UserInterface.png)
 
