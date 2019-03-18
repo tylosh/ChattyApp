@@ -4,7 +4,7 @@ class ChatBar extends Component {
     render() {
 
         if (this.props.currentUser) {
-            user = this.props.currentUser;
+            let user = this.props.currentUser;
         } 
 
         let newChatMessage = this.props.newChatMessage;
